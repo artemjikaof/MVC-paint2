@@ -11,13 +11,13 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 // TODO: 24.10.2024 Сделать singleton класс
-public class Singleton {
+public class Controller {
     private Model model;
     private MyFrame frame;
     private MyPanel panel;
     private Point2D firstPoint;
     private Point2D secondPoint;
-    public Singleton() {
+    public Controller() {
         model = new Model();
         MyShape shape = new MyShape(new Rectangle2D.Double());
         shape.setFb(new NoFill());
