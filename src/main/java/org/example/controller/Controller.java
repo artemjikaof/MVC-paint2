@@ -17,12 +17,18 @@ public class Controller {
     private MyPanel panel;
     private Point2D firstPoint;
     private Point2D secondPoint;
-    public Controller() {
+    private static Controller instansce;
+    public static  Controller getInstance(){
+        if(instansce == null){
+            instansce = new Controller();
+        }
+        return instansce;
+    }
+    private Controller() {
         model = new Model();
         MyShape shape = new MyShape(new Rectangle2D.Double());
         shape.setFb(new NoFill());
         model.setMyShape(shape);
-
         panel = new MyPanel(this);
         // TODO: 25.10.2024 Поменять наблюдатель на более современную реализацию
         model.addObserver(panel);
