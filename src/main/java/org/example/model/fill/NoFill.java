@@ -35,6 +35,6 @@ public class NoFill implements FillBehavior {
         NoFill noFill = new NoFill();
         noFill.color = color;
         noFill.shape = (RectangularShape) shape.clone();
-        return null;
+        return noFill;
     }
 }

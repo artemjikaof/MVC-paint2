@@ -20,6 +20,10 @@ public class Model extends Observable {
     }
 
     public void draw(Graphics2D g) {
+        for (MyShape shape : shapeList){
+            shape.draw(g);
+        }
+
         currentShape.draw(g);
     }
 
@@ -30,6 +34,7 @@ public class Model extends Observable {
     private List<MyShape> shapeList = new ArrayList<>();
 
     public void createCurrentShape(MyShape shape){
+        currentShape = shape;
         shapeList.add(shape);
     }
 }

@@ -18,7 +18,7 @@ public class MyShape implements Cloneable {
     @Override
     public MyShape clone(){
         MyShape clone = new MyShape();
-        clone.fb = fb.clone();
+        clone.setFb(fb.clone());
         RectangularShape anotherShape = (RectangularShape)  shape.clone();
         clone.setShape(anotherShape);
         clone.fb.setShape(anotherShape);
