@@ -42,7 +42,16 @@ public class Controller {
 
         frame = new MyFrame();
         frame.setPanel(panel);
+
+        MenuController menuController = MenuController.getInstance();
+        menuController.setActionDraw(actionDraw);
+        frame.setJMenuBar(menuController.createMenuBar());
+        panel.invalidate();
+        panel.repaint();
+
+
     }
+
     public void mousePressedAction(Point p){
         actionDraw.createShape(p);
     }
