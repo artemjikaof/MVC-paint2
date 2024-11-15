@@ -1,6 +1,8 @@
 package org.example.controller;
 
-import org.example.action.ActionDraw;
+import org.example.controller.action.ActionDraw;
+import org.example.controller.factory.MenuState;
+import org.example.controller.factory.ShapeCreationFactory;
 import org.example.model.Model;
 import org.example.model.MyShape;
 import org.example.model.fill.NoFill;
@@ -21,6 +23,8 @@ public class Controller {
 
     private ActionDraw actionDraw;
 
+    private MenuState state;
+
     private static Controller instansce;
     public static  Controller getInstance(){
         if(instansce == null){
@@ -29,6 +33,9 @@ public class Controller {
         return instansce;
     }
     private Controller() {
+        state = new MenuState();
+        ShapeCreationFactory shapeCreationFactory = ShapeCreationFactory.getInstance();
+        shapeCreationFactory.config(state);
 
         model = new Model();
         MyShape sampleShape = new MyShape(new Rectangle2D.Double());
