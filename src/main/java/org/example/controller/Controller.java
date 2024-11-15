@@ -46,8 +46,7 @@ public class Controller {
         MenuController menuController = MenuController.getInstance();
         menuController.setActionDraw(actionDraw);
         frame.setJMenuBar(menuController.createMenuBar());
-        panel.invalidate();
-        panel.repaint();
+        frame.revalidate();
 
 
     }
