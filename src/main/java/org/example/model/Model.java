@@ -37,4 +37,7 @@ public class Model extends Observable {
         currentShape = shape;
         shapeList.add(shape);
     }
+    public List<MyShape> getShapeList() {
+        return shapeList;
+    }
 }

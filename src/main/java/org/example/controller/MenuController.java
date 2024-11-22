@@ -1,13 +1,16 @@
 package org.example.controller;
 import org.example.controller.action.ActionDraw;
+import org.example.controller.factory.MenuState;
 import org.example.model.MyShape;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 public class MenuController {
     private static MenuController instance;
     private JMenuBar menuBar;
     private ActionDraw actionDraw;
+    private MenuState state;
     private MenuController(){
         menuBar = createMenuBar();
     }
@@ -17,10 +20,14 @@ public class MenuController {
         }
         return instance;
     }
+
     public JMenuBar createMenuBar(){
         JMenuBar menuBar = new JMenuBar();
         JMenu shapeMenu = createShapeMenu();
+        JMenu colorMenu = createColorMenu();
         menuBar.add(shapeMenu);
+        menuBar.add(colorMenu);
+
         return menuBar;
     }
     //    public enum ShapeType{
@@ -46,7 +53,28 @@ public class MenuController {
         group.add(ellipse);
         return shapeMenu;
     }
+    private JMenu createColorMenu() {
+        JMenu colorMenu = new JMenu("Цвет");
+        ButtonGroup group = new ButtonGroup();
+
+        JMenuItem redItem = new JMenuItem("Красный");
+        redItem.addActionListener(e -> state.setColor(Color.RED));
+        colorMenu.add(redItem);
+
+        JMenuItem greenItem = new JMenuItem("Зеленый");
+        greenItem.addActionListener(e -> state.setColor(Color.GREEN));
+        colorMenu.add(greenItem);
+
+        JMenuItem blueItem = new JMenuItem("Синий");
+        blueItem.addActionListener(e -> state.setColor(Color.BLUE));
+        colorMenu.add(blueItem);
+
+        return colorMenu;
+    }
     public void setActionDraw(ActionDraw actionDraw) {
         this.actionDraw = actionDraw;
+    }
+    public void  setState(MenuState state){
+        this.state = state;
     }
 }

@@ -50,4 +50,5 @@ public class MenuState {
     public void setActionDraw(ActionDraw actionDraw) {
         this.actionDraw = actionDraw;
     }
+
 }
