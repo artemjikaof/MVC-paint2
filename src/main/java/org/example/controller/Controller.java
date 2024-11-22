@@ -39,9 +39,9 @@ public class Controller {
         model = new Model();
         MyShape sampleShape = shapeCreationFactory.createShape();
         sampleShape.setFb(new NoFill());
-        model.setMyShape(sampleShape);
         actionDraw = new ActionDraw(model, sampleShape);
         panel = new MyPanel(this);
+        state.setActionDraw(actionDraw);
         // TODO: 25.10.2024 Поменять наблюдатель на более современную реализацию
         model.addObserver(panel);
 
@@ -51,6 +51,7 @@ public class Controller {
 
         MenuController menuController = MenuController.getInstance();
         menuController.setActionDraw(actionDraw);
+        menuController.setState(state);
         frame.setJMenuBar(menuController.createMenuBar());
         frame.revalidate();
 

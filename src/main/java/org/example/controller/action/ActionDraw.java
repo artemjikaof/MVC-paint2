@@ -1,5 +1,6 @@
 package org.example.controller.action;
 
+import org.example.controller.factory.ShapeCreationFactory;
 import org.example.model.Model;
 import org.example.model.MyShape;
 import java.awt.*;
@@ -11,12 +12,15 @@ public class ActionDraw implements AppAction{
     private Point2D firstPoint;
     private Point2D secondPoint;
 
+    private ShapeCreationFactory shapeCreationFactory;
+
     public MyShape getShape() {
         return shape;
     }
     public ActionDraw(Model model, MyShape shape){
         this.model = model;
         this.shape = shape;
+        shapeCreationFactory = ShapeCreationFactory.getInstance();
     }
     @Override
     public void mouseDragged(Point point){
@@ -28,7 +32,7 @@ public class ActionDraw implements AppAction{
     @Override
     public void mousePressed(Point point){
         firstPoint = point;
-        shape = shape.clone();
+        shape = shapeCreationFactory.createShape();
         model.createCurrentShape(shape);
         model.update();
 

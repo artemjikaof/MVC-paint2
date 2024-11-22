@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 
 
 public class MyPanel extends JPanel implements Observer {
-    private Controller singleton;
+    private Controller controller;
 
     public MyPanel(Controller controller) {
-        this.singleton = controller;
+        this.controller = controller;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent arg0) {
@@ -35,7 +35,7 @@ public class MyPanel extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        singleton.draw(g2);
+        controller.draw(g2);
     }
 
     @Override
