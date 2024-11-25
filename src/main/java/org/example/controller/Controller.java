@@ -8,7 +8,6 @@ import org.example.model.MyShape;
 import org.example.model.fill.NoFill;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -38,11 +37,11 @@ public class Controller {
         shapeCreationFactory.config(state);
 
         model = new Model();
-        MyShape sampleShape = new MyShape(new Rectangle2D.Double());
+        MyShape sampleShape = shapeCreationFactory.createShape();
         sampleShape.setFb(new NoFill());
-        model.setMyShape(sampleShape);
         actionDraw = new ActionDraw(model, sampleShape);
         panel = new MyPanel(this);
+        state.setActionDraw(actionDraw);
         // TODO: 25.10.2024 Поменять наблюдатель на более современную реализацию
         model.addObserver(panel);
 
@@ -52,6 +51,7 @@ public class Controller {
 
         MenuController menuController = MenuController.getInstance();
         menuController.setActionDraw(actionDraw);
+        menuController.setState(state);
         frame.setJMenuBar(menuController.createMenuBar());
         frame.revalidate();
 
@@ -59,10 +59,10 @@ public class Controller {
     }
 
     public void mousePressedAction(Point p){
-        actionDraw.createShape(p);
+        actionDraw.mousePressed(p);
     }
     public void mouseDraggedAction(Point p){
-        actionDraw.stretShape(p);
+        actionDraw.mouseDragged(p);
     }
 
     public void draw(Graphics2D g2) {
