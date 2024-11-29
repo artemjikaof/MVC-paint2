@@ -36,6 +36,7 @@ public class ShapeCreationFactory {
         FillBehavior fillBehavior = state.isFill() ? new Fill() : new NoFill();
         fillBehavior.setShape(shape);
         newShape.setFb(fillBehavior);
+        fillBehavior.setColor(state.getColor());
         return newShape;
     }
 }

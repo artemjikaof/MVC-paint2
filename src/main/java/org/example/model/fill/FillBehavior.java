@@ -9,7 +9,12 @@ public interface FillBehavior {
 
     void setColor(Color c);
 
+    Color getColor();
+
     void setShape(RectangularShape s);
 
+    RectangularShape getShape();
+
     FillBehavior clone();
+    //void fill();
 }
