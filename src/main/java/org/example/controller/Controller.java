@@ -53,6 +53,7 @@ public class Controller {
         menuCreator.setState(state);
         menuCreator.setModel(model);
         frame.setJMenuBar(menuCreator.createMenuBar());
+        frame.add(menuCreator.createToolBar(), BorderLayout.NORTH);
         frame.revalidate();
 
 

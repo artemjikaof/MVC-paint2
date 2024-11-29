@@ -2,7 +2,6 @@ package org.example.controller.factory;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.controller.action.ActionDraw;
 import org.example.controller.action.AppAction;
 
 import java.awt.*;
@@ -46,6 +45,10 @@ public class MenuState {
 
     public void setAction(AppAction action) {
         this.action = action;
+    }
+
+    public AppAction getAction() {
+        return action;
     }
 
 }
