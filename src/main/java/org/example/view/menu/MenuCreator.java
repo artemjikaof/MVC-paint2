@@ -1,27 +1,31 @@
-package org.example.controller;
+package org.example.view.menu;
+
 import org.example.controller.action.ActionDraw;
-import org.example.controller.factory.MenuState;
-import org.example.model.MyShape;
-import org.example.controller.action.AppAction;
 import org.example.controller.action.ActionMove;
+import org.example.controller.action.AppAction;
+import org.example.controller.factory.MenuState;
 import org.example.controller.factory.ShapeType;
+import org.example.model.Model;
+import org.example.model.MyShape;
 import javax.swing.*;
 import java.awt.*;
-import org.example.model.Model;
-public class MenuController {
-    private static MenuController instance;
+
+
+
+public class MenuCreator {
+    private static MenuCreator instance;
     private JMenuBar menuBar;
-    private ActionDraw actionDraw;
     private AppAction action;
     private MenuState state;
     private MyShape shape;
     private Model model;
-    private MenuController(){
+
+    private MenuCreator(){
         menuBar = createMenuBar();
     }
-    public static MenuController getInstance(){
+    public static MenuCreator getInstance(){
         if (instance == null){
-            instance = new MenuController();
+            instance = new MenuCreator();
         }
         return instance;
     }
@@ -32,12 +36,10 @@ public class MenuController {
         JMenu colorMenu = createColorMenu();
         menuBar.add(shapeMenu);
         menuBar.add(colorMenu);
-
+        JMenu actionMenu = createActionMenu();
+        menuBar.add(actionMenu);
         return menuBar;
     }
-    //    public enum ShapeType{
-//        RECTANGULAR, ELLIPSE
-//    }
     private JMenu createShapeMenu() {
         JMenu shapeMenu = new JMenu("Фигура");
         ButtonGroup group = new ButtonGroup();
@@ -90,10 +92,11 @@ public class MenuController {
         group.add(ellipse);
         return shapeMenu;
     }
-    public void setActionDraw(ActionDraw actionDraw) {
-        this.actionDraw = actionDraw;
-    }
     public void  setState(MenuState state){
         this.state = state;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
     }
 }

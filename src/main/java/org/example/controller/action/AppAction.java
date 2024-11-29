@@ -4,6 +4,5 @@ import java.awt.*;
 
 public interface AppAction {
     void mousePressed(Point point);
-
     void mouseDragged(Point point);
 }

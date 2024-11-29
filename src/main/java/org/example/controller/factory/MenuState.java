@@ -3,6 +3,7 @@ package org.example.controller.factory;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.controller.action.ActionDraw;
+import org.example.controller.action.AppAction;
 
 import java.awt.*;
 
@@ -12,7 +13,7 @@ public class MenuState {
     private boolean fill;
     private Color color;
     private ShapeType shapeType;
-    private ActionDraw actionDraw;
+    private AppAction action;
 
     public MenuState(){
         shapeType= ShapeType.RECTANGLE;
@@ -43,12 +44,8 @@ public class MenuState {
         this.shapeType = shapeType;
     }
 
-    public ActionDraw getActionDraw() {
-        return actionDraw;
-    }
-
-    public void setActionDraw(ActionDraw actionDraw) {
-        this.actionDraw = actionDraw;
+    public void setAction(AppAction action) {
+        this.action = action;
     }
 
 }

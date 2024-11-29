@@ -17,6 +17,7 @@ public class ActionMove implements AppAction {
     }
 
     public void mousePressed(Point point) {
+        firstPoint = point;
         shape = model.getShapeList()
                 .stream()
                 .filter(myShape -> myShape.getShape().contains(point))
@@ -25,7 +26,7 @@ public class ActionMove implements AppAction {
     }
 
     public void mouseDragged(Point point) {
-
+        secondPoint = point;
         if (shape == null){
             return;
         }
