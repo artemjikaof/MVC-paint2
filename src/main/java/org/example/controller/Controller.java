@@ -2,30 +2,27 @@ package org.example.controller;
 
 import org.example.controller.action.ActionDraw;
 import org.example.controller.factory.MenuState;
+import org.example.controller.action.AppAction;
 import org.example.controller.factory.ShapeCreationFactory;
 import org.example.model.Model;
 import org.example.model.MyShape;
 import org.example.model.fill.NoFill;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
+import org.example.view.menu.MenuCreator;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
-// TODO: 24.10.2024 Сделать singleton класс
+
 public class Controller {
     private Model model;
     private MyFrame frame;
     private MyPanel panel;
-    private Point2D firstPoint;
-    private Point2D secondPoint;
-
-    private ActionDraw actionDraw;
-
     private MenuState state;
-
     private static Controller instansce;
-    public static  Controller getInstance(){
+
+    public static synchronized Controller getInstance(){
         if(instansce == null){
             instansce = new Controller();
         }
@@ -39,30 +36,36 @@ public class Controller {
         model = new Model();
         MyShape sampleShape = shapeCreationFactory.createShape();
         sampleShape.setFb(new NoFill());
-        actionDraw = new ActionDraw(model, sampleShape);
+        AppAction actionDraw = new ActionDraw(model, sampleShape);
         panel = new MyPanel(this);
-        state.setActionDraw(actionDraw);
-        // TODO: 25.10.2024 Поменять наблюдатель на более современную реализацию
+        model.setMyShape(sampleShape);
+
+        state.setAction(actionDraw);
+
         model.addObserver(panel);
+
 
 
         frame = new MyFrame();
         frame.setPanel(panel);
 
-        MenuController menuController = MenuController.getInstance();
-        menuController.setActionDraw(actionDraw);
-        menuController.setState(state);
-        frame.setJMenuBar(menuController.createMenuBar());
+        MenuCreator menuCreator = MenuCreator.getInstance();
+        menuCreator.setState(state);
+        menuCreator.setModel(model);
+        frame.setJMenuBar(menuCreator.createMenuBar());
+        frame.add(menuCreator.createToolBar(), BorderLayout.NORTH);
         frame.revalidate();
 
 
     }
 
-    public void mousePressedAction(Point p){
-        actionDraw.mousePressed(p);
+    public void mousePressedAction(Point2D p){
+        AppAction action = state.getAction();
+        action.mousePressed((Point) p);
     }
-    public void mouseDraggedAction(Point p){
-        actionDraw.mouseDragged(p);
+    public void mouseDraggedAction(Point2D p){
+        AppAction action = state.getAction();
+        action.mouseDragged((Point) p);
     }
 
     public void draw(Graphics2D g2) {

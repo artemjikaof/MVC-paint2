@@ -1,13 +1,9 @@
 package org.example.model;
 
-import org.example.model.fill.Fill;
 import org.example.model.fill.FillBehavior;
-import org.example.model.fill.NoFill;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 public class MyShape implements Cloneable {
@@ -23,8 +19,6 @@ public class MyShape implements Cloneable {
         clone.fb.setShape(anotherShape);
         return clone;
     }
-
-    // TODO: 25.10.2024  Попробовать вызовы через разные конструкторы, затем переделать создание через фабрику
     public MyShape() {
 
     }
