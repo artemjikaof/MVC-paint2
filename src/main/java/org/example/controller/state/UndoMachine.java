@@ -38,6 +38,8 @@ public class UndoMachine {
     }
 
     public void updateButtons() {
+        undoActionListener.setEnabled(isEnableUndo());
+        redoActionListener.setEnabled(isEnableRedo());
 
     }
 }

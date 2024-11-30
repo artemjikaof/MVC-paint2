@@ -46,6 +46,21 @@ public class ActionDraw implements AppAction{
     }
 
     @Override
+    public void execute() {
+
+    }
+
+    @Override
+    public void unexecute() {
+
+    }
+
+    @Override
+    public AppAction cloneAction() {
+        return null;
+    }
+
+    @Override
     public void mousePressed(Point point){
         firstPoint = point;
         shape = shapeCreationFactory.createShape();
