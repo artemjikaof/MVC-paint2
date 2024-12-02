@@ -11,5 +11,8 @@ public class SwitchRedo implements AppCommand {
         undoMachine.executeRedo();
         undoMachine.updateButtons();
     }
+    public SwitchRedo(UndoMachine undoMachine) {
+        this.undoMachine = undoMachine;
+    }
 }
 
