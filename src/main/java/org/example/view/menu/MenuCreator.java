@@ -176,6 +176,17 @@ public class MenuCreator {
         AppCommand moveCommand = new SwitchAction(state, new ActionMove(model));
         menuItems.add(new CommandActionListener("Двигать", moveIco, moveCommand));
 
+        URL redoUrl = getClass().getClassLoader().getResource("ico/redo_16x16.png");
+        ImageIcon redoIco = redoUrl == null ? null : new ImageIcon(moveUrl);
+        AppCommand redoC = new SwitchAction(state, new SwitchRedo());
+        menuItems.add(new CommandActionListener("Действие", redoIco, redoC));
+
+        URL undoUrl = getClass().getClassLoader().getResource("ico/undo_16x16.png");
+        ImageIcon undoIco = undoUrl == null ? null : new ImageIcon(moveUrl);
+        AppCommand undoC = new SwitchAction(state, new SwitchUndo() );
+        menuItems.add(new CommandActionListener("Действие", undoIco, undoC));
+
+
         return menuItems;
 
     }

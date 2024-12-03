@@ -1,9 +1,7 @@
 package org.example.view.menu;
 import org.example.controller.state.UndoMachine;
 
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class SwitchRedo implements AppCommand {
     private UndoMachine undoMachine;
     @Override
