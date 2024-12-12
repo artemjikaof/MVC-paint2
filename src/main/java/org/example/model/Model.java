@@ -14,6 +14,24 @@ public class Model extends Observable {
         currentShape = shape;
         shapeList.add(shape);
     }
+    public void addCurrentShape(MyShape myShape){
+        shapeList.add(myShape);
+    }
+
+
+    public MyShape getLastShape() {
+        int size = shapeList.size();
+        return shapeList.isEmpty() ? null : shapeList.get(size - 1);
+    }
+    public void  removeLastShape() {
+        if(shapeList == null) {
+            return;
+        } else {
+            int size = shapeList.size();
+            shapeList.remove(size - 1);
+        }
+
+    }
 
     public void setMyShape(MyShape myShape) {
         this.currentShape = myShape;
@@ -22,6 +40,7 @@ public class Model extends Observable {
     public void changeShape(Point2D x, Point2D y) {
         currentShape.setFrame(x, y);
     }
+
 
     public void draw(Graphics2D g) {
         for (MyShape shape : shapeList){
@@ -33,9 +52,7 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers();
     }
-    public void addCurrentShape(MyShape myShape){
-        shapeList.add(myShape);
-    }
+
     public List<MyShape> getShapeList() {
         return shapeList;
     }

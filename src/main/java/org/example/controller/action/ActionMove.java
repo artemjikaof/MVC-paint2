@@ -1,6 +1,5 @@
-
 package org.example.controller.action;
-import org.example.controller.factory.ShapeCreationFactory;
+
 import org.example.model.Model;
 import org.example.model.MyShape;
 import java.awt.*;
@@ -11,6 +10,7 @@ public class ActionMove implements AppAction {
     private MyShape shape;
     private Point firstPoint;
     private Point secondPoint;
+    private MyShape moveableShape;
 
     public ActionMove(Model model) {
         this.model = model;
@@ -23,6 +23,7 @@ public class ActionMove implements AppAction {
                 .filter(myShape -> myShape.getShape().contains(point))
                 .findFirst()
                 .orElse(null);
+        moveableShape = shape;
     }
 
     public void mouseDragged(Point point) {
@@ -59,6 +60,9 @@ public class ActionMove implements AppAction {
 
     @Override
     public AppAction cloneAction() {
-        return null;
+        ActionMove actionMove = new ActionMove(model);
+        actionMove.shape = shape.clone();
+        actionMove.moveableShape = moveableShape;
+        return actionMove;
     }
 }

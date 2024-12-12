@@ -1,16 +1,13 @@
 package org.example.controller.state;
+
 import org.example.controller.action.AppAction;
 import java.util.LinkedList;
 import org.example.view.menu.CommandActionListener;
-import lombok.Getter;
-import lombok.Setter;
+
 
 public class UndoMachine {
     private UndoRedoState undoRedoState;
-    @Setter
     private CommandActionListener undoActionListener;
-
-    @Setter
     private CommandActionListener redoActionListener;
 
     public UndoMachine() {
@@ -39,7 +36,6 @@ public class UndoMachine {
     public void add(AppAction action) {
         undoRedoState.clearHistory();
         undoRedoState.addAction(action);
-        //TODO: Определить переход по состоянию
         undoRedoState = new StateEnableUndoDisableRedo(undoRedoState.getUndoActivityList(), undoRedoState.getRedoActivityList());
     }
 
@@ -48,5 +44,12 @@ public class UndoMachine {
         redoActionListener.setEnabled(isEnableRedo());
 
 
+    }
+    public void setUndo(CommandActionListener undo) {
+        this.undoActionListener = undo;
+    }
+
+    public void setRedo(CommandActionListener redo) {
+        this.redoActionListener = redo;
     }
 }

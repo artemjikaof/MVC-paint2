@@ -1,9 +1,10 @@
 package org.example.controller;
 
 import org.example.controller.action.ActionDraw;
-import org.example.controller.factory.MenuState;
+import org.example.controller.state.UndoMachine;
+import org.example.model.factory.MenuState;
 import org.example.controller.action.AppAction;
-import org.example.controller.factory.ShapeCreationFactory;
+import org.example.model.factory.ShapeCreationFactory;
 import org.example.model.Model;
 import org.example.model.MyShape;
 import org.example.model.fill.NoFill;
@@ -21,6 +22,7 @@ public class Controller {
     private MyPanel panel;
     private MenuState state;
     private static Controller instansce;
+    private UndoMachine machine;
 
     public static synchronized Controller getInstance(){
         if(instansce == null){
@@ -48,12 +50,14 @@ public class Controller {
 
         frame = new MyFrame();
         frame.setPanel(panel);
+        machine = new UndoMachine();
 
         MenuCreator menuCreator = MenuCreator.getInstance();
         menuCreator.setState(state);
         menuCreator.setModel(model);
+        menuCreator.setUndoMachine(machine);
         frame.setJMenuBar(menuCreator.createMenuBar());
-        frame.add(menuCreator.createToolBar(), BorderLayout.NORTH);
+        frame.add(menuCreator.createToolBar(), BorderLayout.WEST);
         frame.revalidate();
 
 
@@ -62,6 +66,8 @@ public class Controller {
     public void mousePressedAction(Point2D p){
         AppAction action = state.getAction();
         action.mousePressed((Point) p);
+        machine.add(action.cloneAction());
+        machine.updateButtons();
     }
     public void mouseDraggedAction(Point2D p){
         AppAction action = state.getAction();

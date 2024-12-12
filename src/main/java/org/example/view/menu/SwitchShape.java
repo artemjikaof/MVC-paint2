@@ -1,6 +1,6 @@
 package org.example.view.menu;
-import org.example.controller.factory.MenuState;
-import org.example.controller.factory.ShapeType;
+import org.example.model.factory.MenuState;
+import org.example.model.factory.ShapeType;
 
 public class SwitchShape implements  AppCommand{
 

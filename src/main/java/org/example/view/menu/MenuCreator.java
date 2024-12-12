@@ -1,34 +1,47 @@
 package org.example.view.menu;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
-import org.example.controller.action.AppAction;
-import org.example.controller.factory.MenuState;
-import org.example.controller.factory.ShapeType;
 import org.example.controller.state.UndoMachine;
+import org.example.controller.action.AppAction;
+import org.example.model.factory.MenuState;
+import org.example.model.factory.ShapeType;
 import org.example.model.Model;
 import org.example.model.MyShape;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 
-
+@Getter
+@Setter
 public class MenuCreator {
     private static MenuCreator instance;
     private JMenuBar menuBar;
+    private ActionDraw actionDraw;
     private AppAction action;
     private MenuState state;
     private MyShape shape;
     private Model model;
     private JRadioButtonMenuItem rgbButton;
-
     private UndoMachine undoMachine;
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 
     private MenuCreator(){
         menuBar = createMenuBar();
     }
+
     public static MenuCreator getInstance(){
         if (instance == null){
             instance = new MenuCreator();
@@ -40,11 +53,9 @@ public class MenuCreator {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu shapeMenu = createShapeMenu();
-
-        JMenu colorMenu = createColorMenu();
-
         menuBar.add(shapeMenu);
 
+        JMenu colorMenu = createColorMenu();
         menuBar.add(colorMenu);
 
         JMenu actionMenu = createActionMenu();
@@ -59,11 +70,11 @@ public class MenuCreator {
     private JMenu createShapeMenu() {
         JMenu shapeMenu = new JMenu("Фигура");
         ButtonGroup group = new ButtonGroup();
-        //поменять на фабрику
         JRadioButtonMenuItem square = new JRadioButtonMenuItem("Прямоугольник");
         square.addActionListener(e -> {
             state.setShapeType(ShapeType.RECTANGLE);
         });
+
         shapeMenu.add(square);
         group.add(square);
         JRadioButtonMenuItem ellipse = new JRadioButtonMenuItem("Эллипс");
@@ -132,12 +143,13 @@ public class MenuCreator {
 
     public JToolBar createToolBar(){
         ArrayList<Action> subMenuItems = createToolBarItems();
-        JToolBar jToolBar = new JToolBar();
+        JToolBar jToolBar = new JToolBar(JToolBar.VERTICAL);
 
         subMenuItems.forEach(jToolBar::add);
 
         return jToolBar;
     }
+
 
 
     private ArrayList<Action> createToolBarItems(){
@@ -179,16 +191,22 @@ public class MenuCreator {
         AppCommand moveCommand = new SwitchAction(state, new ActionMove(model));
         menuItems.add(new CommandActionListener("Двигать", moveIco, moveCommand));
 
-        URL redoUrl = getClass().getClassLoader().getResource("ico/redo_16x16.png");
-        ImageIcon redoIco = redoUrl == null ? null : new ImageIcon(moveUrl);
-        AppCommand redoC = new SwitchRedo(undoMachine);
-        menuItems.add(new CommandActionListener("Действие", redoIco, redoC));
-
         URL undoUrl = getClass().getClassLoader().getResource("ico/undo_16x16.png");
-        ImageIcon undoIco = undoUrl == null ? null : new ImageIcon(moveUrl);
+        ImageIcon undoIco = undoUrl == null ? null : new ImageIcon(undoUrl);
         AppCommand undoC = new SwitchUndo(undoMachine);
-        menuItems.add(new CommandActionListener("Действие", undoIco, undoC));
+        CommandActionListener undoListener = new CommandActionListener("Вперед-назад", undoIco, undoC);
+        menuItems.add(undoListener);
 
+        URL redoUrl = getClass().getClassLoader().getResource("ico/redo_16x16.png");
+        ImageIcon redoIco = redoUrl == null ? null : new ImageIcon(redoUrl);
+        AppCommand redoC = new SwitchRedo(undoMachine);
+        CommandActionListener redoListeenr = new CommandActionListener("Вперед-назад", redoIco, redoC);
+        menuItems.add(redoListeenr);
+
+        undoMachine.setUndo(undoListener);
+        undoListener.setEnabled(false);
+        undoMachine.setRedo(redoListeenr);
+        redoListeenr.setEnabled(false);
 
         return menuItems;
 
@@ -197,8 +215,9 @@ public class MenuCreator {
     public void  setState(MenuState state){
         this.state = state;
     }
-
-    public void setModel(Model model) {
-        this.model = model;
+    public void setUndoMachine(UndoMachine undoMachine) {
+        this.undoMachine = undoMachine;
     }
+
+
 }

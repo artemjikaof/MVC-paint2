@@ -1,6 +1,6 @@
 package org.example.view.menu;
 import org.example.controller.action.AppAction;
-import org.example.controller.factory.MenuState;
+import org.example.model.factory.MenuState;
 
 public class SwitchAction implements AppCommand {
     private MenuState menuState;

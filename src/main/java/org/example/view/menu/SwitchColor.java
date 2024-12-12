@@ -1,10 +1,8 @@
 package org.example.view.menu;
-import lombok.AllArgsConstructor;
-import org.example.controller.factory.MenuState;
+import org.example.model.factory.MenuState;
 
 import javax.swing.*;
 import java.awt.*;
-@AllArgsConstructor
 public class SwitchColor implements AppCommand {
     private JRadioButtonMenuItem radioButton;
     private MenuState menuState;
@@ -21,7 +19,10 @@ public class SwitchColor implements AppCommand {
 
     @Override
     public void execute() {
-        Color color = useDefault ? defaultColor : JColorChooser.showDialog(null, "Выбор цвета", Color.BLACK);
+        radioButton.setSelected(!useDefault);
+        Color color = useDefault
+                ? defaultColor
+                : JColorChooser.showDialog(null, "Выбор цвета", Color.BLACK);
         menuState.setColor(color);
     }
 

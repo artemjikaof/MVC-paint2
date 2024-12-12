@@ -1,4 +1,4 @@
-package org.example.controller.factory;
+package org.example.model.factory;
 
 import lombok.Getter;
 import lombok.Setter;
